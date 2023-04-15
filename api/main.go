@@ -71,6 +71,8 @@ func getImage(w http.ResponseWriter, r *http.Request) {
 func execEncode(filename string, width, height int) (string, error) {
 	w := strconv.Itoa(width)
 	h := strconv.Itoa(height)
+
+	// TODO FFI経由で直接C++の処理を呼ぶ
 	destFilename, err := exec.Command("./resizer", filename, w, h).Output()
 	if err != nil {
 		return "", err

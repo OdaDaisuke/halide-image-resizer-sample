@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 3.22)
 find_package(Halide REQUIRED)
 find_package(OpenMP)
 
-function(add_tutorial source_file)
+function(add_file source_file)
     set(options WITH_IMAGE_IO WITH_OPENMP)
     set(oneValueArgs)
     set(multiValueArgs SRCS GROUPS)
@@ -14,12 +14,6 @@ function(add_tutorial source_file)
     add_executable("${name}" "${source_file}")
     target_link_libraries("${name}" PRIVATE Halide::Halide Halide::Tools)
     target_compile_options(${name} PRIVATE "$<$<CXX_COMPILER_ID:GNU>:-Wno-unused-but-set-variable>")
-
-    add_test(NAME tutorial_${name} COMMAND ${name})
-    set_tests_properties(tutorial_${name}
-                         PROPERTIES
-                         ENVIRONMENT "HL_TARGET=${Halide_TARGET};HL_JIT_TARGET=${Halide_TARGET}"
-                         LABELS "tutorial;${args_GROUPS}")
 
     if (args_WITH_IMAGE_IO)
         target_link_libraries(${name} PRIVATE Halide::ImageIO)
@@ -38,4 +32,4 @@ function(add_tutorial source_file)
     endif ()
 endfunction()
 
-add_tutorial(resizer.cpp WITH_IMAGE_IO)
+add_file(resizer.cpp WITH_IMAGE_IO)
