@@ -1,3 +1,9 @@
+# About
+
+- A minimally configured dynamic transformation engine for images, implemented in Halide. https://halide-lang.org/
+
+- [Halide](https://halide-lang.org/) で実装した、最小構成の画像動的変換サーバです。
+
 # How to build halide image encoder
 
 ```shell
