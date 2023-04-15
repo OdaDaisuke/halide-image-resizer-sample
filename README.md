@@ -1,13 +1,28 @@
-# Build
+# How to build halide image encoder
 
 ```shell
 cmake -DCMAKE_BUILD_TYPE=Release
 make
 ```
 
-# Usage
+## Usage
 
-./dynamicImageEncoder/resizer ./sample_images/1.jpeg 100 200
+```shell
+./dynamicImageEncoder/resizer ${IMAGE_PATH} 100 200
+```
+
+# Run
+
+```shell
+$ cd api
+$ go run main.go
+```
+
+And then access to the bellow links.
+
+- http://localhost:8080/image?f=1.jpeg
+- http://localhost:8080/image?f=1.jpeg&w=100
+- http://localhost:8080/image?f=1.jpeg&w=100&h=100
 
 # Workaround
 

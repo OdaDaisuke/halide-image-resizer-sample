@@ -22,10 +22,16 @@ int main(int argc, char *argv[]) {
     int destWidth = input.width();
     int destHeight = input.height();
     if (argc >= 3) {
-        destWidth = atoi(argv[2]);
+        int iArgWidth = atoi(argv[2]);
+        if (iArgWidth > 0) {
+            destWidth = atoi(argv[2]);
+        }
     }
     if (argc >= 4) {
-        destHeight = atoi(argv[3]);
+        int iArgHeight = atoi(argv[3]);
+        if (iArgHeight > 0) {
+            destHeight = atoi(argv[3]);
+        }
     }
 
     Halide::Buffer<uint8_t> output =
@@ -36,5 +42,6 @@ int main(int argc, char *argv[]) {
     dest_filename += fs_path.filename().string();
 
     save_image(output, dest_filename);
+    std::cout << dest_filename;
     return 0;
 }
