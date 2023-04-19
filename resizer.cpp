@@ -60,7 +60,7 @@ int main(int argc, char **argv) {
 
     Target target;
     target.os = Target::OSX;
-    target.arch = Target::X86;
+    target.arch = Target::ARM;
     target.bits = 64;
     target.set_features(features);
     runtime.compile_to_static_library(
@@ -75,7 +75,7 @@ int main(int argc, char **argv) {
     std::vector<Argument> args = {src, width, height, scale_width, scale_height};
     Target target;
     target.os = Target::OSX;
-    target.arch = Target::X86;
+    target.arch = Target::ARM;
     target.bits = 64;
     target.set_features(features);
     fn.compile_to_static_library(

@@ -26,11 +26,16 @@ import (
 	"image"
 	"image/color"
 	"image/png"
+	"log"
+	"net/http"
 	"os"
+	"path"
+	"strconv"
 	"unsafe"
 )
 
 func Scale(in *image.RGBA, scaleWidth, scaleHeight int) *image.RGBA {
+	log.Printf("width:%v, height:%v", scaleWidth, scaleHeight)
 	out := image.NewRGBA(image.Rect(0, 0, scaleWidth, scaleHeight))
 
 	ret := C.call_scale(
@@ -48,35 +53,48 @@ func Scale(in *image.RGBA, scaleWidth, scaleHeight int) *image.RGBA {
 }
 
 func main() {
-	data, err := os.ReadFile("src.png")
+	log.Println("starting server")
+
+	http.HandleFunc("/image", getImage)
+
+	log.Println("app started on port 8080")
+	http.ListenAndServe(":8080", nil)
+}
+
+func getImage(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		w.WriteHeader(http.StatusMethodNotAllowed)
+		return
+	}
+
+	queryParams := r.URL.Query()
+	queryFile := queryParams.Get("f")
+	if queryFile == "" {
+		http.Error(w, "no `?f` specified", http.StatusInternalServerError)
+		return
+	}
+
+	queryWidth := queryParams.Get("w")
+	queryHeight := queryParams.Get("h")
+	width, _ := strconv.Atoi(queryWidth)
+	height, _ := strconv.Atoi(queryHeight)
+
+	data, err := os.ReadFile(path.Join("assets", queryFile))
 	if err != nil {
 		panic(err)
 	}
+
 	src, err := pngToRGBA(data)
 	if err != nil {
 		panic(err)
 	}
 
-	out := Scale(src, 100, 100)
+	out := Scale(src, width, height)
 
-	p, err := saveImage(out)
-	if err != nil {
-		panic(err)
+	if err := png.Encode(w, out); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
-	println("output", p)
-}
-
-func saveImage(img *image.RGBA) (string, error) {
-	out, err := os.CreateTemp("/tmp", "out*.png")
-	if err != nil {
-		return "", err
-	}
-	defer out.Close()
-
-	if err := png.Encode(out, img); err != nil {
-		return "", err
-	}
-	return out.Name(), nil
+	return
 }
 
 func pngToRGBA(data []byte) (*image.RGBA, error) {

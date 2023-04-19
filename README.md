@@ -2,33 +2,21 @@
 
 - A minimally configured dynamic transformation engine for images, implemented in Halide. https://halide-lang.org/
 
-- [Halide](https://halide-lang.org/) で実装した、最小構成の画像動的変換サーバです。
+- [Halide](https://halide-lang.org/) で実装した、学習用の最小構成画像動的変換サーバです。
 
-# How to build halide image encoder
+Thanks @octu0 san.
 
-```shell
-cmake -DCMAKE_BUILD_TYPE=Release
-make
-```
-
-## Usage
+# Usage
 
 ```shell
-./dynamicImageEncoder/resizer ${IMAGE_PATH} 100 200
-```
-
-# Run
-
-```shell
-$ cd api
+$ make generate
 $ go run main.go
 ```
 
 And then access to the bellow links.
 
-- http://localhost:8080/image?f=1.jpeg
-- http://localhost:8080/image?f=1.jpeg&w=100
-- http://localhost:8080/image?f=1.jpeg&w=100&h=100
+- http://localhost:8080/image?f=1.png&w=1200&h=1100
+- http://localhost:8080/image?f=2.png&w=1800&h=1500
 
 # Workaround
 

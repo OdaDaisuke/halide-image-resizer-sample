@@ -1,4 +1,4 @@
-CMakeFiles
-cmake_install.cmake
-./dynamicImageEncoder/resizer
+a.out*
+libscale.a
+libruntime.a
 resized_*
