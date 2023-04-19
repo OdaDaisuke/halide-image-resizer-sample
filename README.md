@@ -1,6 +1,6 @@
 # About
 
-- A minimally configured dynamic transformation engine for images, implemented in Halide. https://halide-lang.org/
+- A minimally configured dynamic image convert server, implemented in Halide. https://halide-lang.org/
 
 - [Halide](https://halide-lang.org/) で実装した、学習用の最小構成画像動的変換サーバです。
 
