@@ -35,7 +35,6 @@ import (
 )
 
 func Scale(in *image.RGBA, scaleWidth, scaleHeight int) *image.RGBA {
-	log.Printf("width:%v, height:%v", scaleWidth, scaleHeight)
 	out := image.NewRGBA(image.Rect(0, 0, scaleWidth, scaleHeight))
 
 	ret := C.call_scale(

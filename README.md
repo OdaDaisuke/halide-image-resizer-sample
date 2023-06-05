@@ -18,6 +18,12 @@ And then access to the bellow links.
 - http://localhost:8080/image?f=1.png&w=1200&h=1100
 - http://localhost:8080/image?f=2.png&w=1800&h=1500
 
+# Benchmark
+
+```golang
+$ go test -bench .
+```
+
 # Workaround
 
 ### LLVM Error : `Could not find a package configuration file provided by "LLVM" (requested version 15.0.7) with any of the following names:`
